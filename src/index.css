@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tiger: #FF7A1A;
+  --jet: #0B0B0D;
+  --bone: #F5EFE6;
+  --ember: #C2410C;
+  --rain: #3B82F6;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: var(--jet);
+  color: var(--bone);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF7A1A;
+  border-radius: 3px;
+}
+
+/* Stripe motif utility */
+.stripe-divider {
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #FF7A1A 0px,
+    #FF7A1A 12px,
+    transparent 12px,
+    transparent 20px
+  );
+}
+
+/* Focus states */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #FF7A1A;
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
