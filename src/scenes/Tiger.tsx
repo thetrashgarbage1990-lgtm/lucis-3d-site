@@ -10,7 +10,7 @@ export function Tiger() {
   const progress = useScrollStore((s) => s.progress)
 
   const materials = useMemo(() => ({
-    body: new THREE.MeshStandardMaterial({ color: '#E dig 85 20', roughness: 0.7 }),
+    body: new THREE.MeshStandardMaterial({ color: '#E85A20', roughness: 0.7 }),
     stripe: new THREE.MeshStandardMaterial({ color: '#1a1a1a', roughness: 0.6 }),
     eye: new THREE.MeshStandardMaterial({ color: '#FF7A1A', emissive: '#FF7A1A', emissiveIntensity: 2, toneMapped: false }),
     white: new THREE.MeshStandardMaterial({ color: '#F5EFE6', roughness: 0.8 }),
@@ -21,7 +21,6 @@ export function Tiger() {
     const p = progress
     const t = state.clock.elapsedTime
 
-    // Visibility & position by section
     if (p < 0.12) {
       group.current.visible = false
     } else if (p < 0.25) {
@@ -39,10 +38,8 @@ export function Tiger() {
       group.current.rotation.y = Math.PI * 0.05
     }
 
-    // Subtle idle breathing
     group.current.position.y += Math.sin(t * 1.5) * 0.01
 
-    // Head tracks pointer in certain sections
     if (head.current && (p < 0.25 || p > 0.9)) {
       const mx = state.pointer.x * 0.3
       const my = state.pointer.y * 0.15
@@ -53,34 +50,28 @@ export function Tiger() {
 
   return (
     <group ref={group} scale={0.85}>
-      {/* Body */}
       <mesh position={[0, 0.4, 0]} material={materials.body}>
         <capsuleGeometry args={[0.35, 0.9, 8, 16]} />
       </mesh>
-      {/* Stripes on body (simple boxes) */}
-      {[ -0.3, -0.1, 0.1, 0.3 ].map((z, i) => (
-        <mesh key={i} position={[0.32, 0.45, z]} rotation={[0, 0, 0.1]} material={materials.stripe}>
+      {[-0.3, -0.1, 0.1, 0.3].map((z, i) => (
+        <mesh key={i} position={[0.32, 0.45, z]} material={materials.stripe}>
           <boxGeometry args={[0.08, 0.5, 0.12]} />
         </mesh>
       ))}
 
-      {/* Head group */}
       <group ref={head} position={[0, 0.85, 0.55]}>
         <mesh material={materials.body}>
           <sphereGeometry args={[0.32, 16, 12]} />
         </mesh>
-        {/* Snout */}
         <mesh position={[0, -0.05, 0.28]} material={materials.white}>
           <sphereGeometry args={[0.16, 12, 8]} />
         </mesh>
-        {/* Eyes */}
         <mesh position={[-0.12, 0.08, 0.26]} material={materials.eye}>
           <sphereGeometry args={[0.05, 8, 8]} />
         </mesh>
         <mesh position={[0.12, 0.08, 0.26]} material={materials.eye}>
           <sphereGeometry args={[0.05, 8, 8]} />
         </mesh>
-        {/* Ears */}
         <mesh position={[-0.2, 0.25, 0]} material={materials.body}>
           <coneGeometry args={[0.08, 0.15, 6]} />
         </mesh>
@@ -89,7 +80,6 @@ export function Tiger() {
         </mesh>
       </group>
 
-      {/* Legs */}
       {[
         [-0.25, 0, 0.35],
         [0.25, 0, 0.35],
@@ -101,7 +91,6 @@ export function Tiger() {
         </mesh>
       ))}
 
-      {/* Tail */}
       <mesh position={[0, 0.5, -0.7]} rotation={[0.6, 0, 0]} material={materials.body}>
         <capsuleGeometry args={[0.06, 0.6, 4, 8]} />
       </mesh>
